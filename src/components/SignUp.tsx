@@ -115,7 +115,7 @@ export default function SignUp() {
                 : "bg-gray-400 cursor-not-allowed"
             }`}
             disabled={!allFilled}
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/home")}
           >
             Sign up
           </button>
