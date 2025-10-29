@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MapPin, Flag, Bell, ChevronRight, Plus } from "lucide-react";
+import services from "@/app/data/services";
 
 const HomeServicesApp = () => {
   const [currentScreen, setCurrentScreen] = useState("location");
@@ -43,7 +44,7 @@ const HomeServicesApp = () => {
 
           {/* Service Cards - Top Two */}
           <div className="space-y-4 mb-auto">
-            {services.slice(0, 2).map((service) => (
+            {services.slice(0, 2).map((service: any) => (
               <div
                 key={service.id}
                 className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm border border-gray-100"
@@ -64,63 +65,7 @@ const HomeServicesApp = () => {
             ))}
           </div>
 
-          {/* Location Modal */}
-          <div className="bg-white rounded-3xl shadow-lg p-6 mt-4">
-            <div className="flex justify-end mb-4">
-              <button className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
 
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <MapPin
-                  className="w-12 h-12 text-pink-500"
-                  fill="currentColor"
-                />
-                <div className="absolute -bottom-2 -right-2 w-16 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg opacity-80"></div>
-                <Flag
-                  className="absolute -right-4 -bottom-1 w-8 h-8 text-blue-600"
-                  fill="currentColor"
-                />
-              </div>
-            </div>
-
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-3">
-              Where are you ?
-            </h2>
-
-            <p className="text-center text-gray-500 text-sm mb-6">
-              Set your Location so we can come straight to you and find
-              available service providers nearby.
-            </p>
-
-            <button
-              onClick={handleSetAutomatically}
-              className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold mb-3 hover:bg-blue-700 transition-colors"
-            >
-              Set automatically
-            </button>
-
-            <button
-              onClick={handleSetLater}
-              className="w-full bg-white text-gray-700 py-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-50 transition-colors"
-            >
-              Set later
-            </button>
-          </div>
         </div>
       )}
 

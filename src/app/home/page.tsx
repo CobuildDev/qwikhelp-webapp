@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Bell, ChevronRight, Flag, MapPin } from "lucide-react";
+import { Bell, ChevronRight, Flag, LocateIcon, MapPin } from "lucide-react";
 import services from "../data/services";
 
 const page = () => {
-  const [location, setLocation] = React.useState('popup');
+  const [location, setLocation] = React.useState("popup");
   return (
     <main className=" bg-[#f3f5f6] h-full relative">
       <header className="flex justify-between py-2 pt-4 mb-4  items-center px-4">
@@ -50,13 +50,13 @@ const page = () => {
       </section>
 
       {/* Location Modal */}
-      {location === 'popup' && (
-        <section className="bg-black/50 h-full fixed w-full top-0 left-0 z-50">  
+      {location === "popup" && (
+        <section className="bg-black/50 h-full fixed w-full top-0 left-0 z-50">
           <div className="bg-white rounded-3xl shadow-lg p-6 mt-4 fixed w-full bottom-0 left-0">
             <div className="flex justify-end mb-4">
               <button
                 className="w-8 h-8 bg-blue-50 cursor-pointer rounded-full flex items-center justify-center"
-                onClick={() => setLocation('none')}
+                onClick={() => setLocation("none")}
               >
                 <svg
                   className="w-5 h-5 text-blue-600"
@@ -100,6 +100,7 @@ const page = () => {
             <button
               //  onClick={handleSetAutomatically}
               className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold mb-3 hover:bg-blue-700 transition-colors"
+              onClick={() => setLocation("location")}
             >
               Set automatically
             </button>
@@ -107,23 +108,73 @@ const page = () => {
             <button
               //  onClick={handleSetLater}
               className="w-full bg-white text-gray-700 py-4 rounded-xl font-semibold border border-gray-300 hover:bg-gray-50 transition-colors"
-             onClick={() => setLocation('none')}
-           >
+              onClick={() => setLocation("none")}
+            >
               Set later
             </button>
           </div>
         </section>
       )}
 
-       
-       {/* Location True */}
-       <section>
-       <div>
-        <p></p>
-       </div>
-       </section>
+      {/* Location True */}
+      {location === "location" && (
+        <section className="fixed inset-0 flex justify-center items-center bg-black/50 z-50">
+          <div className="flex flex-col gap-4 bg-[#1C284A] text-white rounded-2xl shadow-lg p-6 max-w-sm w-full mx-auto">
+            <h2 className="text-lg font-semibold text-center">
+              For better experience, your device will need to use Location
+              Accuracy
+            </h2>
 
+            <div className="space-y-3 text-sm text-gray-300">
+              <p>The following settings should be on</p>
 
+              <div className="flex flex-col gap-2 pl-2">
+                <p className="flex items-center gap-2">
+                  <span className="text-xl">
+                    <LocateIcon />
+                  </span>{" "}
+                  Device location
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-xl">⚙️</span>
+                  <span>
+                    Location Accuracy, which provides more accurate location for
+                    apps and services. To do this, Google periodically processes
+                    information about device sensors and wireless signals from
+                    your device to crowd-source wireless signal locations...
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-400">
+              You can change this at any time in location settings{" "}
+              <a href="#" className="text-blue-400 hover:underline">
+                Manage settings
+              </a>{" "}
+              or{" "}
+              <a href="#" className="text-blue-400 hover:underline">
+                learn more
+              </a>
+            </p>
+
+            <div className="flex justify-center gap-3 pt-3">
+              <button
+                className="px-4 py-2 text-sm font-medium text-gray-300 border border-gray-500 rounded-lg hover:bg-gray-700"
+                onClick={() => setLocation("")}
+              >
+                No, thanks
+              </button>
+              <button
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                onClick={() => console.log("Location Set")}
+              >
+                Turn on
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 };
