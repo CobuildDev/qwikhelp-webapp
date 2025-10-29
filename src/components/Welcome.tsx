@@ -8,6 +8,7 @@ export default function Welcome() {
   const [welcome, setWelcome] = useState<boolean>(true);
   setTimeout(() => {
     setWelcome(false);
+    window.location.href = "/home";
   }, 4000);
   return (
     <div className="h-screen md:hidden">
