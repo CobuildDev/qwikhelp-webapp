@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Onbording() {
   const router = useRouter();
   return (
-    <section className="h-screen md:hidden">
+    <section className="h-screen md:hidden z-50 bg-white z-[9999]">
       <div className="flex flex-col gap-8 justify-center items-center h-full">
         <div className="justify-center items-center flex flex-col gap-4">
           <Image src="/icons/icon.png" alt="" width={130} height={130} />

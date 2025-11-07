@@ -6,6 +6,11 @@ import services from "../data/services";
 
 const page = () => {
   const [location, setLocation] = React.useState("popup");
+
+  const handleLocation = () => {
+    setLocation("");
+    alert("Location is on");
+  };
   return (
     <main className=" bg-[#f3f5f6] h-full relative">
       <header className="flex justify-between py-2 pt-4 mb-4  items-center px-4">
@@ -56,7 +61,7 @@ const page = () => {
             <div className="flex justify-end mb-4">
               <button
                 className="w-8 h-8 bg-blue-50 cursor-pointer rounded-full flex items-center justify-center"
-                onClick={() => setLocation("none")}
+                onClick={() => setLocation("")}
               >
                 <svg
                   className="w-5 h-5 text-blue-600"
@@ -167,7 +172,7 @@ const page = () => {
               </button>
               <button
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                onClick={() => console.log("Location Set")}
+                onClick={handleLocation}
               >
                 Turn on
               </button>
