@@ -1,5 +1,7 @@
 'use client'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { SessionProvider } from 'next-auth/react'
 import React from 'react'
 import OnlyMobile from './OnlyMobile'
 
@@ -11,8 +13,10 @@ export default function ClientWrapper({
   children: React.ReactNode
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <OnlyMobile>{children}</OnlyMobile>
-    </QueryClientProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <OnlyMobile>{children}</OnlyMobile>
+      </QueryClientProvider>
+    </SessionProvider>
   )
 }

@@ -1,29 +1,42 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI as string
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
   throw new Error('⚠️ MONGODB_URI is not defined in .env.local')
 }
 
-let cached = (global as any)._mongooseCache
-
-if (!cached) {
-  cached = (global as any)._mongooseCache = { conn: null, promise: null }
+interface MongooseCache {
+  conn?: typeof mongoose
+  promise?: Promise<typeof mongoose>
 }
 
-export async function connectDB() {
-  if (cached.conn) return cached.conn
+declare global {
+  var _mongooseCache: MongooseCache
+}
 
-  if (!cached.promise) {
-    cached.promise = mongoose
+const globalCache = global._mongooseCache || {}
+
+async function connectDB(): Promise<typeof mongoose> {
+  if (globalCache.conn) {
+    return globalCache.conn
+  }
+
+  if (!globalCache.promise) {
+    globalCache.promise = mongoose
       .connect(MONGODB_URI, {
         dbName: 'qwikhelp',
         bufferCommands: false,
       })
-      .then((mongoose) => mongoose)
+      .then((mongooseInstance) => {
+        globalCache.conn = mongooseInstance
+        return mongooseInstance
+      })
   }
 
-  cached.conn = await cached.promise
-  return cached.conn
+  global._mongooseCache = globalCache
+
+  return globalCache.promise
 }
+
+export default connectDB

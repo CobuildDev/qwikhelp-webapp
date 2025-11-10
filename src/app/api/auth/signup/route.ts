@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
+import connectDB from '../../../../../lib/db'
+import User from '../../../../../lib/models/User'
 
 export async function POST(req: Request) {
   try {
@@ -20,18 +22,35 @@ export async function POST(req: Request) {
       )
     }
 
+    await connectDB()
+
+    const existingUser = await User.findOne({ email })
+    if (existingUser) {
+      return NextResponse.json(
+        { message: 'Email already in use' },
+        { status: 400 }
+      )
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const fakeUser = {
-      id: 'temp-id-123',
+    const newUser = await User.create({
       firstname,
       lastname,
       email,
       password: hashedPassword,
-    }
+    })
 
     return NextResponse.json(
-      { message: 'Signup successful (TEMP)', user: fakeUser },
+      {
+        message: 'Signup successful',
+        user: {
+          id: newUser._id,
+          firstname: newUser.firstname,
+          lastname: newUser.lastname,
+          email: newUser.email,
+        },
+      },
       { status: 201 }
     )
   } catch (error: any) {

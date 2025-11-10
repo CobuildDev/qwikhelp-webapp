@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { toast } from 'sonner'
 import { useSignupMutation } from '../../services/auth.service'
 import SocialAuth from './SocialAuth'
 
@@ -45,7 +46,10 @@ export default function SignUp() {
         confirmPassword: formData.confirmPassword,
       },
       {
-        onSuccess: () => router.push('/home'),
+        onSuccess: () => {
+          toast.success('Account created successfully!')
+          router.push('/home')
+        },
       }
     )
   }
@@ -136,6 +140,12 @@ export default function SignUp() {
             {isPending ? 'Creating account...' : 'Sign up'}
           </button>
         </form>
+        {isError && (
+          <p className='text-red-500 text-sm mt-2'>
+            {error?.response?.data?.message || 'Something went wrong'}
+          </p>
+        )}
+
         {/* Divider */}
         <div className='flex items-center gap-3'>
           <div className='flex-1 h-px bg-[#e5e7eb]'></div>
